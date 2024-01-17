@@ -1,0 +1,48 @@
+#include <stdio.h>
+int main() {
+    int signalLength, filterLength;
+    printf("Enter signal length: ");
+    scanf("%d", &signalLength);
+
+    if (signalLength > 50) {
+        printf("Signal length should not exceed 50.\n");
+        return 1;
+    }
+
+    float signal[50], smoothedSignal[50];
+    printf("Enter signal: ");
+    for (int i = 0; i < signalLength; i++) {
+        scanf("%f", &signal[i]);
+    }
+    printf("Enter filter length (odd number): ");
+    scanf("%d", &filterLength);
+
+    if (filterLength % 2 == 0) {
+        printf("Filter length should be an odd number.\n");
+        return 1;
+    }
+    for (int i = 0; i < signalLength; i++) {
+        int filterSum = 0;
+        int count = 0;
+
+        for (int j = i - filterLength / 2; j <= i + filterLength / 2; j++) {
+            if (j >= 0 && j < signalLength) {
+                filterSum += signal[j];
+                count++;
+            }
+        }
+
+        smoothedSignal[i] = (float)filterSum /filterLength ;
+    }
+    printf("Smoothed signal: {");
+    for (int i = 0; i < signalLength; i++) {
+        printf("%.6f", smoothedSignal[i]);
+        if (i < signalLength - 1) {
+            printf(", ");
+        }
+    }
+    printf("}\n");
+
+    return 0;
+}
+
